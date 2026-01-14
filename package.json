@@ -8,6 +8,6 @@
   "workspaces": ["src"],
   "scripts": {
     "build": "npm run build -w src",
-    "skill": "npm run start -w src --"
+    "skill": "npm run start -s -w src --"
   }
 }
