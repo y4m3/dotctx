@@ -1,0 +1,9 @@
+{
+  "name": "agent-skills",
+  "private": true,
+  "workspaces": ["cli"],
+  "scripts": {
+    "build": "npm run build -w cli",
+    "skill": "npm run start -w cli --"
+  }
+}

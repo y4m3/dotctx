@@ -1,0 +1,6 @@
+# Copy this file to skills.yaml and configure paths
+# Each skill can have multiple destination paths
+
+pr-check:
+  # - ~/.claude/skills
+  # - ~/repos/project/.claude/skills
