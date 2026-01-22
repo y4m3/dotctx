@@ -7,8 +7,8 @@ import { statusCommand } from "./commands/status.js";
 const program = new Command();
 
 program
-  .name("skill")
-  .description("Claude Code skill management CLI")
+  .name("dotctx")
+  .description("Claude Code context management CLI")
   .version("1.0.0");
 
 program.addCommand(listCommand);

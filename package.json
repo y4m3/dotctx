@@ -1,5 +1,5 @@
 {
-  "name": "agent-skills",
+  "name": "dotctx",
   "private": true,
   "engines": {
     "node": ">=18.0.0",
@@ -8,6 +8,6 @@
   "workspaces": ["src"],
   "scripts": {
     "build": "npm run build -w src",
-    "skill": "npm run start -s -w src --"
+    "dotctx": "npm run start -s -w src --"
   }
 }

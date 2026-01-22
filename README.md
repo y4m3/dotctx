@@ -1,6 +1,6 @@
-# agent-skills
+# dotctx
 
-Claude Code skills management monorepo.
+Claude Code context management CLI.
 
 ## Requirements
 
@@ -10,16 +10,25 @@ Claude Code skills management monorepo.
 ## Structure
 
 ```
-agent-skills/
-├── src/                    # Skill management CLI (TypeScript)
+dotctx/
+├── src/                    # CLI source (TypeScript)
 │   └── src/
 │       ├── commands/       # CLI commands (list, sync, status)
 │       └── utils/          # Utilities (config, hash)
-├── skills/                 # Skill definitions
-│   └── pr-check/           # GitHub PR check skill
-├── skills.yaml.example     # Template for skill configuration
-├── skills.yaml             # Local config (git-ignored)
-└── skills.lock.yaml        # Sync state (git-ignored)
+├── components/             # Component definitions
+│   ├── core/               # Core hooks and rules
+│   │   ├── hooks/
+│   │   └── rules/
+│   ├── linear-issue/       # Linear issue skill
+│   │   └── SKILL.md
+│   ├── pr-check/           # PR check skill
+│   │   └── SKILL.md
+│   └── start-work/         # Start work skill
+│       ├── SKILL.md
+│       ├── hooks/
+│       └── rules/
+├── config.yaml             # Local config (git-ignored)
+└── config.lock.yaml        # Sync state (git-ignored)
 ```
 
 ## Installation
@@ -31,53 +40,59 @@ npm run build
 
 ## Usage
 
-### Configure skills
+### Configure components
 
-Copy the template and add your destinations:
-
-```bash
-cp skills.yaml.example skills.yaml
-```
-
-Edit `skills.yaml`:
+Create `config.yaml` with your components and destinations:
 
 ```yaml
-pr-check:
-  - ~/.claude/skills
-  - ~/repos/myproject/.claude/skills
+# Components to enable
+components:
+  - core
+  - linear-issue
+  - start-work
+  - pr-check
+
+# Destinations for syncing
+destinations:
+  - ~/.claude
+  # Add project-specific destinations as needed:
+  # - ~/repos/project-a/.claude
+  # - ~/repos/project-b/.claude
 ```
 
 ### Commands
 
 ```bash
-# List available skills
-npm run skill -- list
+# List available components
+npm run dotctx -- list
 
-# Sync skills to configured destinations
-npm run skill -- sync
+# Sync components to configured destinations
+npm run dotctx -- sync
 
 # Preview changes without applying
-npm run skill -- sync --dry-run
+npm run dotctx -- sync --dry-run
 
 # Show sync status
-npm run skill -- status
+npm run dotctx -- status
 ```
 
 ## How it works
 
-1. **Copy-based deployment**: Skills are copied (not symlinked) to destinations
+1. **Copy-based deployment**: Components are copied (not symlinked) to destinations
 2. **Idempotent**: Running sync multiple times is safe
 3. **Protected updates**: Local changes and git-managed destinations are protected
-4. **Lock file**: `skills.lock.yaml` tracks sync state for change detection
+4. **Lock file**: `config.lock.yaml` tracks sync state for change detection
 
-## Adding new skills
+## Adding new components
 
-Create a new directory under `skills/` with a `SKILL.md` file:
+Create a new directory under `components/` with the appropriate structure:
 
 ```
-skills/
-└── my-skill/
-    └── SKILL.md
+components/
+└── my-component/
+    ├── SKILL.md      # Skill definition (optional)
+    ├── hooks/        # Hook scripts (optional)
+    └── rules/        # Rule files (optional)
 ```
 
-Then add it to `skills.yaml.example` and your local `skills.yaml`.
+Then add it to your `config.yaml` components list.

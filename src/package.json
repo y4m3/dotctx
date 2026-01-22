@@ -1,5 +1,5 @@
 {
-  "name": "agent-skills-manager",
+  "name": "dotctx",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -9,7 +9,7 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "skill": "dist/index.js"
+    "dotctx": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
