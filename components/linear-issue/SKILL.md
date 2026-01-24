@@ -35,7 +35,8 @@ Simple rule:
 ### 2. Repository Label (MANDATORY - Choose ONE)
 
 Every issue MUST have exactly one Repository label (exclusive).
-Query existing labels: `mcp__plugin_linear_linear__list_issue_labels`
+Query existing labels: `mcp__plugin_linear_linear__list_issue_labels` with `team` parameter.
+(チーム固有のRepositoryラベルを取得するため、teamパラメータは必須)
 
 ## Prerequisites
 
@@ -56,24 +57,31 @@ If unclear, ask: "Does this produce a PR?"
 - YES → Feature / Bug / Chore
 - NO / Undecided → Thinking
 
-### Step 2: Gather Information
+### Step 2: Determine Team
+
+Query teams: `mcp__plugin_linear_linear__list_teams`
+- If single team → use automatically
+- If multiple teams → ask user or infer from context
+
+### Step 3: Gather Information + Repository Label
+
+**IMPORTANT:** Query Repository labels with team parameter:
+`mcp__plugin_linear_linear__list_issue_labels` with `team: <selected_team>`
+
+**CRITICAL:** ラベル付与時は名前ではなくIDを使用すること。
+`list_issue_labels`の結果から該当ラベルのIDを取得し、`create_issue`の`labels`パラメータにはIDを指定する。
 
 **For Feature / Bug / Chore:**
-- Repository name (for Repository Label)
+- Repository label (select from team's Repository label group)
 - What to change (files, behavior)
 - Done criteria (clear and measurable)
 
 **For Thinking:**
+- Repository label (select from team's Repository label group)
 - Topic/question
 - Current state
 - Options/candidates
 - Decision criteria (if any)
-
-### Step 3: Determine Team
-
-Query teams: `mcp__plugin_linear_linear__list_teams`
-- If single team → use automatically
-- If multiple teams → ask user or infer from Repository label
 
 ### Step 4: Create Issue
 
@@ -81,7 +89,7 @@ Use `mcp__plugin_linear_linear__create_issue` with:
 - `team`: Selected team name or ID
 - `title`: English (for branch name generation)
 - `description`: User's language (see templates below)
-- `labels`: [Type label, Repository label]
+- `labels`: [Type label ID, Repository label ID] ← 名前ではなくIDを使用
 
 ## Description Templates
 
